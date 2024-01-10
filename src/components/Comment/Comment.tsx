@@ -7,9 +7,9 @@ interface IProps {
   comment: IComment;
 }
 
-const Comment = ({ comment: { name, comment, date, id } }: IProps) => {
+const Comment = ({ comment: { name, comment, date } }: IProps) => {
   return (
-    <div className={styles.wrapper} key={id}>
+    <div className={styles.wrapper}>
       <div className={styles.info}>
         <div className={styles.header}>
           <div>

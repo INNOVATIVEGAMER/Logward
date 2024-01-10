@@ -3,7 +3,7 @@ import { IComment } from "../types";
 
 interface CommentContextData {
   comments: IComment[];
-  addComment: (comment: IComment) => void;
+  addComment: (comment: Omit<IComment, "id" | "date">) => void;
   deleteComment: (commentId: number) => void;
   updateComment: (commentId: number, updatedComment: IComment) => void;
 }
