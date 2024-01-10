@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./CommentForm.module.scss";
+import { useComments } from "../../context/CommentsContext";
+import { IComment } from "../../types";
 
 const CommentForm = () => {
+  const { addComment } = useComments();
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -16,7 +19,13 @@ const CommentForm = () => {
       return;
     }
 
-    console.log({ name, comment });
+    const commentData: Omit<IComment, "id" | "date"> = {
+      name,
+      comment,
+      parentId: null,
+    };
+
+    addComment(commentData);
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -7,7 +7,9 @@ const CommentList = () => {
   return (
     <div className={styles.wrapper}>
       {comments.map((cm) => (
-        <Comment comment={cm} />
+        <div key={cm.id}>
+          <Comment comment={cm} />
+        </div>
       ))}
     </div>
   );

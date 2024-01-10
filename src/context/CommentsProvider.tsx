@@ -9,8 +9,10 @@ interface IProps {
 const CommentsProvider = ({ children }: IProps) => {
   const [comments, setComments] = useState<IComment[]>([]);
 
-  const addComment = (comment: IComment) =>
-    setComments((prev) => [...prev, comment]);
+  const addComment = (comment: Omit<IComment, "id" | "date">) => {
+    const id = Date.now();
+    setComments((prev) => [...prev, { ...comment, id, date: new Date() }]);
+  };
 
   const updateComment = (commentId: number, updatedComment: IComment) => {
     const commentIndex = comments.findIndex((cm) => cm.id === commentId);
