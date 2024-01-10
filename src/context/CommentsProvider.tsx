@@ -25,7 +25,7 @@ const CommentsProvider = ({ children }: IProps) => {
 
   const deleteComment = (commentId: number) => {
     const filteredComments = comments.filter(
-      (cm) => cm.id === commentId || cm.parentId === commentId
+      (cm) => cm.id !== commentId && cm.parentId !== commentId
     );
 
     setComments(filteredComments);
