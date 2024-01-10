@@ -3,14 +3,33 @@ import { IComment } from "../../types";
 import styles from "./Comment.module.scss";
 import deleteIcon from "../../assets/icons/delete.svg";
 import { useComments } from "../../context/CommentsContext";
+import { ChangeEvent, useState } from "react";
 
 interface IProps {
   comment: IComment;
 }
 
-const Comment = ({ comment: { name, comment, date, id } }: IProps) => {
-  const { deleteComment } = useComments();
+const Comment = ({ comment: { name, comment, date, id, ...rest } }: IProps) => {
+  const { deleteComment, updateComment } = useComments();
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [updatedCommentText, setUpdatedCommentText] = useState<string>(comment);
+
+  const toggleEdit = () => setIsEditing((prev) => !prev);
   const handleDelete = () => deleteComment(id);
+  const handleUpdate = () => {
+    updateComment(id, {
+      id,
+      name,
+      date,
+      ...rest,
+      comment: updatedCommentText,
+    });
+    setIsEditing(false);
+  };
+
+  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
+    setUpdatedCommentText(e.target.value);
 
   return (
     <div className={styles.wrapper}>
@@ -21,11 +40,32 @@ const Comment = ({ comment: { name, comment, date, id } }: IProps) => {
           </div>
           <div>{formatDate(date)}</div>
         </div>
-        <div className={styles.comment}>{comment}</div>
+        {!isEditing && <div className={styles.comment}>{comment}</div>}
+        {isEditing && (
+          <textarea
+            name="comment"
+            id="comment"
+            className={styles.input}
+            placeholder="Comment"
+            defaultValue={comment}
+            onChange={handleCommentChange}
+          ></textarea>
+        )}
       </div>
       <div className={styles.btns}>
         <button className={styles.btn}>Reply</button>
-        <button className={styles.btn}>Edit</button>
+        <button className={styles.btn} onClick={toggleEdit}>
+          {isEditing ? "Cancel" : "Edit"}
+        </button>
+        {isEditing && (
+          <button
+            className={styles.btn}
+            onClick={handleUpdate}
+            disabled={updatedCommentText === comment}
+          >
+            Update
+          </button>
+        )}
       </div>
       <button className={styles.delete} onClick={handleDelete}>
         <img src={deleteIcon} alt="delete" className={styles.icon} />
