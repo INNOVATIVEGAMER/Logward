@@ -1,15 +1,15 @@
 import { formatDate } from "../../helpers/dates";
-import { Comment } from "../../types";
+import { IComment } from "../../types";
 import styles from "./Comment.module.scss";
 import deleteIcon from "../../assets/icons/delete.svg";
 
 interface IProps {
-  comment: Comment;
+  comment: IComment;
 }
 
-const Comment = ({ comment: { name, comment, date } }: IProps) => {
+const Comment = ({ comment: { name, comment, date, id } }: IProps) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} key={id}>
       <div className={styles.info}>
         <div className={styles.header}>
           <div>
