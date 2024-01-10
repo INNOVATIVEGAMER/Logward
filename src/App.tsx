@@ -1,7 +1,12 @@
 import "./App.css";
+import CommentForm from "./components/CommentForm/CommentForm";
 
 function App() {
-  return <>App</>;
+  return (
+    <>
+      <CommentForm />
+    </>
+  );
 }
 
 export default App;
