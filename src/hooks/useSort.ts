@@ -7,7 +7,7 @@ export const useSort = <T>(arr: T[], sortKey: keyof T, startSort: boolean) => {
   const toggleSort = () => setIsASC((prev) => !prev);
 
   useEffect(() => {
-    if (arr.length === 0 || !sortKey) return;
+    if (!sortKey) return;
 
     let positiveReturn = 1;
     let negativeReturn = -1;

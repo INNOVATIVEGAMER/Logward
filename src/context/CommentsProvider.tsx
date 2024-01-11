@@ -13,21 +13,18 @@ const CommentsProvider = ({ children }: IProps) => {
   const { sortedItems, toggleSort, isASC } = useSort(comments, "date", true);
 
   useEffect(() => {
-    if (comments.length === 0) {
-      const prevData = getFromSessionStorage(SSKeys.COMMENTS_DATA);
-      if (!prevData) return;
+    const prevData = getFromSessionStorage(SSKeys.COMMENTS_DATA);
+    if (!prevData) return;
 
-      const prevComments = JSON.parse(prevData) as ICommentData[];
-      setComments(prevComments);
-      return;
-    }
-
-    storeToSessionStorage(comments, SSKeys.COMMENTS_DATA);
-  }, [comments]);
+    const prevComments = JSON.parse(prevData) as ICommentData[];
+    setComments(prevComments);
+  }, []);
 
   const addComment = (comment: Omit<ICommentData, "id" | "date">) => {
     const id = Date.now();
-    setComments((prev) => [...prev, { ...comment, id, date: new Date() }]);
+    const updatedComments = [...comments, { ...comment, id, date: new Date() }];
+    setComments(updatedComments);
+    storeToSessionStorage(updatedComments, SSKeys.COMMENTS_DATA);
   };
 
   const updateComment = (commentId: number, updatedComment: ICommentData) => {
@@ -37,6 +34,7 @@ const CommentsProvider = ({ children }: IProps) => {
     const updatedComments = structuredClone(comments);
     updatedComments[commentIndex] = updatedComment;
     setComments(updatedComments);
+    storeToSessionStorage(updatedComments, SSKeys.COMMENTS_DATA);
   };
 
   const deleteComment = (commentId: number) => {
@@ -45,6 +43,7 @@ const CommentsProvider = ({ children }: IProps) => {
     );
 
     setComments(filteredComments);
+    storeToSessionStorage(filteredComments, SSKeys.COMMENTS_DATA);
   };
 
   return (
