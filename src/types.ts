@@ -14,3 +14,7 @@ export interface IComment {
   parentId: number | null;
   replies: IComment[];
 }
+
+export enum SSKeys {
+  COMMENTS_DATA = "COMMENTS_DATA",
+}

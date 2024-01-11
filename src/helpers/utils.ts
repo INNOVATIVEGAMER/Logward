@@ -1,4 +1,4 @@
-import { IComment, ICommentData } from "../types";
+import { ICommentData, SSKeys, IComment } from "./../types";
 
 type commentTableType = {
   [key in number]: IComment;
@@ -17,3 +17,9 @@ export const createCommentTree = (commentsArr: ICommentData[]) => {
 
   return { commentTree };
 };
+
+export const storeToSessionStorage = (comments: ICommentData[], key: SSKeys) =>
+  sessionStorage.setItem(key, JSON.stringify(comments));
+
+export const getFromSessionStorage = (key: SSKeys) =>
+  sessionStorage.getItem(key);
