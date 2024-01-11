@@ -20,6 +20,10 @@
     .down {
       transform: rotate(180deg);
     }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .parent {
