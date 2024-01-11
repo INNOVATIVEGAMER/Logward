@@ -3,7 +3,12 @@ import styles from "./CommentForm.module.scss";
 import { useComments } from "../../context/CommentsContext";
 import { IComment } from "../../types";
 
-const CommentForm = () => {
+interface IProps {
+  parentId: number | null;
+  toggleReply?: () => void;
+}
+
+const CommentForm = ({ parentId, toggleReply }: IProps) => {
   const { addComment } = useComments();
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -22,10 +27,12 @@ const CommentForm = () => {
     const commentData: Omit<IComment, "id" | "date"> = {
       name,
       comment,
-      parentId: null,
+      parentId,
+      replies: [],
     };
 
     addComment(commentData);
+    if (toggleReply) toggleReply();
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,4 @@
-import { IComment } from "./../types";
+import { ICommentData } from "./../types";
 import { ReactNode, useState } from "react";
 import { CommentContext } from "./CommentsContext";
 
@@ -7,14 +7,14 @@ interface IProps {
 }
 
 const CommentsProvider = ({ children }: IProps) => {
-  const [comments, setComments] = useState<IComment[]>([]);
+  const [comments, setComments] = useState<ICommentData[]>([]);
 
-  const addComment = (comment: Omit<IComment, "id" | "date">) => {
+  const addComment = (comment: Omit<ICommentData, "id" | "date">) => {
     const id = Date.now();
     setComments((prev) => [...prev, { ...comment, id, date: new Date() }]);
   };
 
-  const updateComment = (commentId: number, updatedComment: IComment) => {
+  const updateComment = (commentId: number, updatedComment: ICommentData) => {
     const commentIndex = comments.findIndex((cm) => cm.id === commentId);
     if (commentIndex < 0) return;
 

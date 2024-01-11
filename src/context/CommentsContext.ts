@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-import { IComment } from "../types";
+import { ICommentData } from "../types";
 
 interface CommentContextData {
-  comments: IComment[];
-  addComment: (comment: Omit<IComment, "id" | "date">) => void;
+  comments: ICommentData[];
+  addComment: (comment: Omit<ICommentData, "id" | "date">) => void;
   deleteComment: (commentId: number) => void;
-  updateComment: (commentId: number, updatedComment: IComment) => void;
+  updateComment: (commentId: number, updatedComment: ICommentData) => void;
 }
 
 const initialState: CommentContextData = {

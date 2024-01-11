@@ -1,15 +1,17 @@
 import styles from "./App.module.scss";
 import CommentForm from "./components/CommentForm/CommentForm";
 import CommentList from "./components/CommentList.tsx/CommentList";
-import CommentsProvider from "./context/CommentsProvider";
+import { useComments } from "./context/CommentsContext";
+import { createCommentTree } from "./helpers/utils";
 
 function App() {
+  const { comments } = useComments();
+  const { commentTree } = createCommentTree(comments);
+
   return (
     <div className={styles.wrapper}>
-      <CommentsProvider>
-        <CommentForm />
-        <CommentList />
-      </CommentsProvider>
+      <CommentForm parentId={null} />
+      <CommentList comments={commentTree} />
     </div>
   );
 }
