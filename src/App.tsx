@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import styles from "./App.module.scss";
 import CommentForm from "./components/CommentForm/CommentForm";
 import CommentList from "./components/CommentList.tsx/CommentList";
@@ -8,12 +8,18 @@ import { createCommentTree } from "./helpers/utils";
 function App() {
   const { comments, changeTreeLevel, treeLevel } = useComments();
   const { commentTree } = createCommentTree(comments);
+  const [levelVal, setLevelVal] = useState<number | "">(treeLevel);
 
   const handleChangeTreeLevel = (e: ChangeEvent<HTMLInputElement>) => {
     const level = Number(e.target.value);
-    if (!level) return;
+
+    if (!level) {
+      setLevelVal("");
+      return;
+    }
 
     changeTreeLevel(level);
+    setLevelVal(level);
   };
 
   return (
@@ -25,7 +31,7 @@ function App() {
             type="number"
             name="treeLevel"
             id="treeLevel"
-            defaultValue={treeLevel}
+            value={levelVal}
             onChange={handleChangeTreeLevel}
           />
         </div>

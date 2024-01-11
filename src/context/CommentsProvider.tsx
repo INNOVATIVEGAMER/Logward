@@ -2,11 +2,7 @@ import { ICommentData, SSKeys } from "./../types";
 import { ReactNode, useEffect, useState } from "react";
 import { CommentContext } from "./CommentsContext";
 import { useSort } from "../hooks/useSort";
-import {
-  getFromSessionStorage,
-  removeFromSessionStorage,
-  storeToSessionStorage,
-} from "../helpers/utils";
+import { getFromSessionStorage, storeToSessionStorage } from "../helpers/utils";
 
 interface IProps {
   children: ReactNode;
@@ -19,36 +15,33 @@ const CommentsProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     const prevData = getFromSessionStorage(SSKeys.TREE_LEVEL);
-    removeFromSessionStorage(SSKeys.TREE_LEVEL);
     if (!prevData) return;
 
     const prevTreeLevel = JSON.parse(prevData) as number;
-    if (prevTreeLevel !== 1) setTreeLevel(prevTreeLevel);
+    setTreeLevel(prevTreeLevel);
   }, []);
 
   useEffect(() => {
-    if (comments.length === 0) {
-      const prevData = getFromSessionStorage(SSKeys.COMMENTS_DATA);
-      if (!prevData) return;
+    const prevData = getFromSessionStorage(SSKeys.COMMENTS_DATA);
+    if (!prevData) return;
 
-      const prevComments = JSON.parse(prevData) as ICommentData[];
-      setComments(prevComments);
-      return;
-    }
-
-    storeToSessionStorage(comments, SSKeys.COMMENTS_DATA);
-  }, [comments]);
+    const prevComments = JSON.parse(prevData) as ICommentData[];
+    setComments(prevComments);
+  }, []);
 
   const changeTreeLevel = (level: number) => {
     setTreeLevel(level);
     const newComments = comments.filter((cm) => cm.level <= level);
     setComments(newComments);
+    storeToSessionStorage(newComments, SSKeys.COMMENTS_DATA);
     storeToSessionStorage(level, SSKeys.TREE_LEVEL);
   };
 
   const addComment = (comment: Omit<ICommentData, "id" | "date">) => {
     const id = Date.now();
-    setComments((prev) => [...prev, { ...comment, id, date: new Date() }]);
+    const updatedComments = [...comments, { ...comment, id, date: new Date() }];
+    setComments(updatedComments);
+    storeToSessionStorage(updatedComments, SSKeys.COMMENTS_DATA);
   };
 
   const updateComment = (commentId: number, updatedComment: ICommentData) => {
@@ -58,6 +51,7 @@ const CommentsProvider = ({ children }: IProps) => {
     const updatedComments = structuredClone(comments);
     updatedComments[commentIndex] = updatedComment;
     setComments(updatedComments);
+    storeToSessionStorage(updatedComments, SSKeys.COMMENTS_DATA);
   };
 
   const deleteComment = (commentId: number) => {
@@ -66,6 +60,7 @@ const CommentsProvider = ({ children }: IProps) => {
     );
 
     setComments(filteredComments);
+    storeToSessionStorage(filteredComments, SSKeys.COMMENTS_DATA);
   };
 
   return (
