@@ -60,9 +60,11 @@ const Comment = ({
           )}
         </div>
         <div className={styles.btns}>
-          <button className={styles.btn} onClick={toggleReply}>
-            {isReplying ? "Cancel Reply" : "Reply"}
-          </button>
+          {parentId === null && (
+            <button className={styles.btn} onClick={toggleReply}>
+              {isReplying ? "Cancel Reply" : "Reply"}
+            </button>
+          )}
           <button className={styles.btn} onClick={toggleEdit}>
             {isEditing ? "Cancel Edit" : "Edit"}
           </button>
