@@ -2,4 +2,14 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  .parent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .replies {
+      margin-left: 100px;
+    }
+  }
 }
