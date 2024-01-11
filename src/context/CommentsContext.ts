@@ -8,6 +8,8 @@ interface CommentContextData {
   updateComment: (commentId: number, updatedComment: ICommentData) => void;
   toggleSort: () => void;
   isASC: boolean;
+  treeLevel: number;
+  changeTreeLevel: (level: number) => void;
 }
 
 const initialState: CommentContextData = {
@@ -17,6 +19,8 @@ const initialState: CommentContextData = {
   updateComment: () => {},
   toggleSort: () => {},
   isASC: true,
+  treeLevel: 1,
+  changeTreeLevel: () => {},
 };
 
 export const CommentContext = createContext<CommentContextData>(initialState);

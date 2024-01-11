@@ -11,9 +11,9 @@ interface IProps {
 }
 
 const Comment = ({
-  comment: { name, comment, date, id, parentId },
+  comment: { name, comment, date, id, parentId, level },
 }: IProps) => {
-  const { deleteComment, updateComment } = useComments();
+  const { deleteComment, updateComment, treeLevel } = useComments();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isReplying, setIsReplying] = useState<boolean>(false);
@@ -30,6 +30,7 @@ const Comment = ({
       date,
       parentId,
       comment: updatedCommentText,
+      level,
     });
     setIsEditing(false);
   };
@@ -60,7 +61,7 @@ const Comment = ({
           )}
         </div>
         <div className={styles.btns}>
-          {parentId === null && (
+          {level < treeLevel && (
             <button className={styles.btn} onClick={toggleReply}>
               {isReplying ? "Cancel Reply" : "Reply"}
             </button>
@@ -84,7 +85,11 @@ const Comment = ({
       </div>
       {isReplying && (
         <div className={styles.replyForm}>
-          <CommentForm parentId={id} toggleReply={toggleReply} />
+          <CommentForm
+            parentId={id}
+            toggleReply={toggleReply}
+            prevLevel={level}
+          />
         </div>
       )}
     </div>

@@ -6,9 +6,10 @@ import { IComment } from "../../types";
 interface IProps {
   parentId: number | null;
   toggleReply?: () => void;
+  prevLevel: number;
 }
 
-const CommentForm = ({ parentId, toggleReply }: IProps) => {
+const CommentForm = ({ parentId, toggleReply, prevLevel }: IProps) => {
   const { addComment } = useComments();
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -29,6 +30,7 @@ const CommentForm = ({ parentId, toggleReply }: IProps) => {
       comment,
       parentId,
       replies: [],
+      level: prevLevel + 1,
     };
 
     addComment(commentData);

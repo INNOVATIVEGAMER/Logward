@@ -18,8 +18,13 @@ export const createCommentTree = (commentsArr: ICommentData[]) => {
   return { commentTree };
 };
 
-export const storeToSessionStorage = (comments: ICommentData[], key: SSKeys) =>
-  sessionStorage.setItem(key, JSON.stringify(comments));
+export const storeToSessionStorage = (
+  data: ICommentData[] | number,
+  key: SSKeys
+) => sessionStorage.setItem(key, JSON.stringify(data));
 
 export const getFromSessionStorage = (key: SSKeys) =>
   sessionStorage.getItem(key);
+
+export const removeFromSessionStorage = (key: SSKeys) =>
+  sessionStorage.removeItem(key);

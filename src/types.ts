@@ -4,6 +4,7 @@ export interface ICommentData {
   comment: string;
   date: Date;
   parentId: number | null;
+  level: number;
 }
 
 export interface IComment {
@@ -13,8 +14,10 @@ export interface IComment {
   date: Date;
   parentId: number | null;
   replies: IComment[];
+  level: number;
 }
 
 export enum SSKeys {
   COMMENTS_DATA = "COMMENTS_DATA",
+  TREE_LEVEL = "TREE_LEVEL",
 }

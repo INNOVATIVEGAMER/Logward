@@ -5,4 +5,21 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  .treeLevel {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .formGrp {
+      display: flex;
+      gap: 16px;
+    }
+
+    .helperText {
+      font-size: 12px;
+      line-height: 16px;
+      color: #666;
+    }
+  }
 }
