@@ -1,6 +1,7 @@
 import { ICommentData } from "./../types";
 import { ReactNode, useState } from "react";
 import { CommentContext } from "./CommentsContext";
+import { useSort } from "../hooks/useSort";
 
 interface IProps {
   children: ReactNode;
@@ -8,6 +9,7 @@ interface IProps {
 
 const CommentsProvider = ({ children }: IProps) => {
   const [comments, setComments] = useState<ICommentData[]>([]);
+  const { sortedItems, toggleSort, isASC } = useSort(comments, "date", true);
 
   const addComment = (comment: Omit<ICommentData, "id" | "date">) => {
     const id = Date.now();
@@ -33,7 +35,14 @@ const CommentsProvider = ({ children }: IProps) => {
 
   return (
     <CommentContext.Provider
-      value={{ comments, addComment, deleteComment, updateComment }}
+      value={{
+        comments: sortedItems,
+        addComment,
+        deleteComment,
+        updateComment,
+        toggleSort,
+        isASC,
+      }}
     >
       {children}
     </CommentContext.Provider>

@@ -1,7 +1,26 @@
 .wrapper {
-  display: flex;
+  display: grid;
   flex-direction: column;
   gap: 16px;
+
+  .sort {
+    display: flex;
+    gap: 4px;
+    justify-self: self-end;
+
+    .arrow {
+      width: 20px;
+      height: 20px;
+    }
+
+    .up {
+      transform: rotate(0deg);
+    }
+
+    .down {
+      transform: rotate(180deg);
+    }
+  }
 
   .parent {
     display: flex;
