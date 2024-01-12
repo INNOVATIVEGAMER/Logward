@@ -53,7 +53,7 @@ const Comment = ({
               name="comment"
               id="comment"
               className={styles.input}
-              placeholder="Comment"
+              placeholder={parentId !== null ? "Reply" : "Comment"}
               defaultValue={comment}
               onChange={handleCommentChange}
             ></textarea>
