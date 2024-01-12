@@ -10,7 +10,6 @@ interface IProps {
 
 const CommentForm = ({ parentId, toggleReply }: IProps) => {
   const { addComment } = useComments();
-  const [isDirty, setIsDirty] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
   const handlePost = (e: FormEvent<HTMLFormElement>) => {
@@ -37,14 +36,12 @@ const CommentForm = ({ parentId, toggleReply }: IProps) => {
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
-      setIsDirty(true);
       setIsError(false);
     }
   };
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value) {
-      setIsDirty(true);
       setIsError(false);
     }
   };
@@ -65,18 +62,16 @@ const CommentForm = ({ parentId, toggleReply }: IProps) => {
           name="comment"
           id="comment"
           className={styles.input}
-          placeholder="Comment"
+          placeholder={parentId !== null ? "Reply" : "Comment"}
           onChange={handleCommentChange}
         ></textarea>
 
         {isError && (
-          <div className={styles.error}>Please enter name and comment</div>
+          <div className={styles.error}>
+            Please enter name and {parentId !== null ? "Reply" : "Comment"}
+          </div>
         )}
-        <button
-          className={styles.btn}
-          type="submit"
-          disabled={!isDirty || isError}
-        >
+        <button className={styles.btn} type="submit" disabled={isError}>
           POST
         </button>
       </form>
