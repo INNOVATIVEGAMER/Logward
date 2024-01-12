@@ -27,6 +27,7 @@
     }
 
     textarea {
+      font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
       resize: none;
     }
 
@@ -52,9 +53,11 @@
       }
 
       &:disabled {
-        cursor: not-allowed;
-        pointer-events: none;
         background-color: #ddd;
+
+        &:hover {
+          cursor: not-allowed;
+        }
       }
     }
   }

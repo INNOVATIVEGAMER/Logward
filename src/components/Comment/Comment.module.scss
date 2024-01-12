@@ -42,6 +42,7 @@
       }
 
       textarea {
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
         resize: none;
       }
     }
@@ -61,16 +62,18 @@
         }
 
         &:disabled {
-          cursor: not-allowed;
-          pointer-events: none;
           color: #ddd;
+
+          &:hover {
+            cursor: not-allowed;
+          }
         }
       }
     }
 
     .delete {
       position: absolute;
-      right: -20px;
+      right: -19px;
       top: calc(50% - 20px);
       display: grid;
       place-items: center;
